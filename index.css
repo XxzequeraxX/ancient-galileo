@@ -1,0 +1,438 @@
+/* ===================================
+   POMODORO TIMER - DESIGN SYSTEM
+   Calm Red Aesthetic | Minimalist
+   =================================== */
+
+/* ========== CSS CUSTOM PROPERTIES ========== */
+:root {
+  /* Calm Red Color Palette */
+  --color-bg-primary: #FFF5F5;
+  --color-bg-secondary: #FFE5E5;
+  --color-bg-gradient-start: #FFE5E5;
+  --color-bg-gradient-end: #FFD0D0;
+  
+  --color-red-soft: #FFB8B8;
+  --color-red-medium: #FF9999;
+  --color-red-accent: #C85C5C;
+  --color-red-deep: #A83232;
+  --color-red-dark: #8B2828;
+  
+  --color-text-primary: #2D2D2D;
+  --color-text-secondary: #666666;
+  --color-text-light: #999999;
+  --color-white: #FFFFFF;
+  
+  /* Shadows */
+  --shadow-soft: 0 4px 20px rgba(200, 92, 92, 0.08);
+  --shadow-medium: 0 8px 30px rgba(200, 92, 92, 0.12);
+  --shadow-hover: 0 12px 40px rgba(200, 92, 92, 0.16);
+  
+  /* Typography */
+  --font-family: 'Poppins', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-size-small: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-large: 1.25rem;
+  --font-size-xl: 1.5rem;
+  --font-size-timer: 5rem;
+  
+  /* Spacing */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+  
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-full: 50%;
+  
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-base: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  
+  /* Progress Circle */
+  --circle-size: 320px;
+  --circle-stroke: 12px;
+}
+
+/* ========== RESET & BASE STYLES ========== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-family);
+  background: linear-gradient(135deg, var(--color-bg-gradient-start) 0%, var(--color-bg-gradient-end) 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-primary);
+  overflow-x: hidden;
+  animation: fadeIn 0.8s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ========== LAYOUT ========== */
+.container {
+  width: 100%;
+  max-width: 600px;
+  padding: var(--spacing-lg);
+  text-align: center;
+}
+
+.app-header {
+  margin-bottom: var(--spacing-xl);
+  animation: slideDown 0.6s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.app-title {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  color: var(--color-red-deep);
+  letter-spacing: -0.5px;
+  margin-bottom: var(--spacing-xs);
+}
+
+.app-subtitle {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  font-weight: 400;
+}
+
+/* ========== TIMER CARD ========== */
+.timer-card {
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  box-shadow: var(--shadow-soft);
+  transition: box-shadow var(--transition-base);
+  animation: scaleIn 0.6s ease 0.2s backwards;
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.timer-card:hover {
+  box-shadow: var(--shadow-medium);
+}
+
+/* ========== SESSION SELECTOR ========== */
+.session-selector {
+  display: flex;
+  gap: var(--spacing-sm);
+  justify-content: center;
+  margin-bottom: var(--spacing-xl);
+  flex-wrap: wrap;
+}
+
+.session-btn {
+  padding: var(--spacing-xs) var(--spacing-md);
+  border: 2px solid var(--color-red-soft);
+  background: transparent;
+  color: var(--color-red-accent);
+  border-radius: var(--radius-md);
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.session-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--color-red-soft);
+  transform: translateY(100%);
+  transition: transform var(--transition-base);
+  z-index: -1;
+}
+
+.session-btn:hover::before {
+  transform: translateY(0);
+}
+
+.session-btn:hover {
+  color: var(--color-red-deep);
+  border-color: var(--color-red-medium);
+}
+
+.session-btn.active {
+  background: var(--color-red-accent);
+  color: var(--color-white);
+  border-color: var(--color-red-accent);
+}
+
+.session-btn.active::before {
+  display: none;
+}
+
+/* ========== TIMER DISPLAY ========== */
+.timer-display {
+  position: relative;
+  width: var(--circle-size);
+  height: var(--circle-size);
+  margin: 0 auto var(--spacing-xl);
+}
+
+.progress-ring {
+  transform: rotate(-90deg);
+  width: 100%;
+  height: 100%;
+}
+
+.progress-ring-circle {
+  stroke: var(--color-red-soft);
+  fill: transparent;
+  stroke-width: var(--circle-stroke);
+  stroke-linecap: round;
+  transition: stroke-dashoffset var(--transition-fast) linear;
+}
+
+.progress-ring-bg {
+  stroke: var(--color-bg-secondary);
+  fill: transparent;
+  stroke-width: var(--circle-stroke);
+}
+
+.timer-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+}
+
+.timer-time {
+  font-size: var(--font-size-timer);
+  font-weight: 600;
+  color: var(--color-red-deep);
+  letter-spacing: -2px;
+  line-height: 1;
+  margin-bottom: var(--spacing-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.timer-label {
+  font-size: var(--font-size-large);
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.session-count {
+  font-size: var(--font-size-small);
+  color: var(--color-text-light);
+  margin-top: var(--spacing-xs);
+}
+
+/* Pulse animation for active timer */
+.timer-display.running .timer-time {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+
+/* ========== CONTROLS ========== */
+.timer-controls {
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.control-btn {
+  padding: var(--spacing-md) var(--spacing-xl);
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-soft);
+  min-width: 120px;
+  position: relative;
+  overflow: hidden;
+}
+
+.control-btn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.control-btn:active::after {
+  width: 300px;
+  height: 300px;
+}
+
+.btn-start {
+  background: var(--color-red-accent);
+  color: var(--color-white);
+}
+
+.btn-start:hover {
+  background: var(--color-red-deep);
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+}
+
+.btn-pause {
+  background: var(--color-red-medium);
+  color: var(--color-white);
+}
+
+.btn-pause:hover {
+  background: var(--color-red-accent);
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+}
+
+.btn-reset {
+  background: var(--color-bg-secondary);
+  color: var(--color-red-accent);
+}
+
+.btn-reset:hover {
+  background: var(--color-red-soft);
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+}
+
+.control-btn:active {
+  transform: translateY(0);
+}
+
+.control-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.control-btn:disabled:hover {
+  transform: none;
+  box-shadow: var(--shadow-soft);
+}
+
+/* ========== RESPONSIVE DESIGN ========== */
+@media (max-width: 640px) {
+  :root {
+    --circle-size: 280px;
+    --font-size-timer: 4rem;
+  }
+  
+  .container {
+    padding: var(--spacing-md);
+  }
+  
+  .timer-card {
+    padding: var(--spacing-lg);
+  }
+  
+  .session-selector {
+    gap: var(--spacing-xs);
+  }
+  
+  .session-btn {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-small);
+  }
+  
+  .control-btn {
+    min-width: 100px;
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+}
+
+@media (max-width: 400px) {
+  :root {
+    --circle-size: 240px;
+    --font-size-timer: 3rem;
+  }
+  
+  .app-title {
+    font-size: var(--font-size-large);
+  }
+  
+  .timer-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .control-btn {
+    width: 100%;
+  }
+}
+
+/* ========== ACCESSIBILITY ========== */
+.control-btn:focus,
+.session-btn:focus {
+  outline: 3px solid var(--color-red-accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

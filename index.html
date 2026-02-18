@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A minimalist Pomodoro timer app with a calm red aesthetic to help you focus and be productive.">
+  <meta name="keywords" content="pomodoro, timer, productivity, focus, time management">
+  <title>Pomodoro Timer - Focus & Productivity</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="app-header">
+      <h1 class="app-title">Pomodoro Timer</h1>
+      <p class="app-subtitle">Focus. Work. Rest. Repeat.</p>
+    </header>
+
+    <!-- Timer Card -->
+    <div class="timer-card">
+      <!-- Session Selector -->
+      <div class="session-selector">
+        <button class="session-btn active" data-session="pomodoro" id="btn-pomodoro">
+          Pomodoro
+        </button>
+        <button class="session-btn" data-session="shortBreak" id="btn-short-break">
+          Short Break
+        </button>
+        <button class="session-btn" data-session="longBreak" id="btn-long-break">
+          Long Break
+        </button>
+      </div>
+
+      <!-- Timer Display with Circular Progress -->
+      <div class="timer-display" id="timer-display">
+        <svg class="progress-ring" width="320" height="320">
+          <!-- Background circle -->
+          <circle
+            class="progress-ring-bg"
+            cx="160"
+            cy="160"
+            r="150"
+          />
+          <!-- Progress circle -->
+          <circle
+            class="progress-ring-circle"
+            id="progress-circle"
+            cx="160"
+            cy="160"
+            r="150"
+          />
+        </svg>
+        
+        <div class="timer-content">
+          <div class="timer-time" id="timer-time">25:00</div>
+          <div class="timer-label" id="timer-label">Ready to focus</div>
+          <div class="session-count" id="session-count">Session 0 of 4</div>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="timer-controls">
+        <button class="control-btn btn-start" id="btn-start">
+          Start
+        </button>
+        <button class="control-btn btn-pause" id="btn-pause" disabled>
+          Pause
+        </button>
+        <button class="control-btn btn-reset" id="btn-reset">
+          Reset
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Audio for notification -->
+  <audio id="notification-sound" preload="auto">
+    <source src="notification.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- JavaScript -->
+  <script src="app.js"></script>
+</body>
+</html>
